@@ -2,193 +2,94 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
-  <title>廠區安全測驗</title>
+  <title>永隆工程(苗栗廠)進場考試</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; }
+    .hidden { display: none; }
     .question { margin-bottom: 20px; }
     button { padding: 10px 20px; margin-top: 10px; }
     #timer { font-size: 20px; font-weight: bold; color: red; }
-    .correct { color: green; font-weight: bold; }
-    .wrong { color: red; font-weight: bold; }
   </style>
 </head>
 <body>
-  <h1>廠區安全測驗</h1>
-  <p>剩餘時間：<span id="timer">10:00</span></p>
+  <h1>永隆工程(苗栗廠)進場考試</h1>
 
-  <form id="quizForm">
-    <!-- 題目 1 -->
-    <div class="question">
-      <p>1. 下列行為哪一項是在廠區內允許的？</p>
-      <label><input type="radio" name="q1" value="A"> 攜帶酒精性飲料</label><br>
-      <label><input type="radio" name="q1" value="B"> 吸菸僅能在指定吸菸區</label><br>
-      <label><input type="radio" name="q1" value="C"> 嚼檳榔、賭博、飲食</label><br>
-      <label><input type="radio" name="q1" value="D"> 隨地大小便</label>
-    </div>
+  <p>📌 上傳到 GitHub Pages 或 Netlify 即可生成網址</p>
 
-    <!-- 題目 2 -->
-    <div class="question">
-      <p>2. 若未經報備許可，不可到其他管制區。</p>
-      <label><input type="radio" name="q2" value="A"> 是,須報備許可才可到管制區作業</label><br>
-      <label><input type="radio" name="q2" value="B"> 否,我想去哪就去哪不用經他人許可</label>
-    </div>
+  <!-- 登入頁 -->
+  <div id="loginSection">
+    <h2>請先登入</h2>
+    <label>姓名：<input type="text" id="name"></label><br><br>
+    <label>工號 / 公司名：<input type="text" id="employeeId"></label><br><br>
+    <button onclick="startQuiz()">開始考試</button>
+  </div>
 
-    <!-- 題目 3 -->
-    <div class="question">
-      <p>3. 任何的電氣設備接在規定的電源插座上，絕不私自拔除。</p>
-      <label><input type="radio" name="q3" value="A"> 是</label><br>
-      <label><input type="radio" name="q3" value="B"> 否</label>
-    </div>
+  <!-- 考試頁 -->
+  <div id="quizSection" class="hidden">
+    <p>考生姓名：<span id="displayName"></span>　工號/公司名：<span id="displayId"></span></p>
+    <p>剩餘時間：<span id="timer">10:00</span></p>
 
-    <!-- 題目 4 -->
-    <div class="question">
-      <p>4. 下列是哪一行為是為經許可確認並周遭環境安全時，不可接近之範圍？</p>
-      <label><input type="radio" name="q4" value="A"> 吊掛半徑範圍內</label><br>
-      <label><input type="radio" name="q4" value="B"> 吊掛物正下方</label><br>
-      <label><input type="radio" name="q4" value="C"> 游離輻射作業範圍</label><br>
-      <label><input type="radio" name="q4" value="D"> 以上皆是</label>
-    </div>
+    <form id="quizForm">
+      <!-- 題目 1 -->
+      <div class="question">
+        <p>1. 下列行為哪一項是在廠區內允許的？</p>
+        <label><input type="radio" name="q1" value="A"> 攜帶酒精性飲料</label><br>
+        <label><input type="radio" name="q1" value="B"> 吸菸僅能在指定吸菸區</label><br>
+        <label><input type="radio" name="q1" value="C"> 嚼檳榔、賭博、飲食</label><br>
+        <label><input type="radio" name="q1" value="D"> 隨地大小便</label>
+      </div>
+      <!-- 題目 2-10 可依需求添加 -->
+      <button type="button" onclick="submitQuiz()">交卷</button>
+    </form>
+  </div>
 
-    <!-- 題目 5 -->
-    <div class="question">
-      <p>5. 下列關於動火作業時須注意的項目何者不正確？</p>
-      <label><input type="radio" name="q5" value="A"> 作業時須自備合格滅火器</label><br>
-      <label><input type="radio" name="q5" value="B"> 申請動火作業許可單</label><br>
-      <label><input type="radio" name="q5" value="C"> 告知職安單位</label><br>
-      <label><input type="radio" name="q5" value="D"> 以上皆非</label>
-    </div>
-
-    <!-- 題目 6 -->
-    <div class="question">
-      <p>6. 關於場內車輛停放規定下列何者正確？</p>
-      <label><input type="radio" name="q6" value="A"> 停放至指定區域</label><br>
-      <label><input type="radio" name="q6" value="B"> 只要有格子就停</label><br>
-      <label><input type="radio" name="q6" value="C"> 隨意停在空地或場內任何位置</label><br>
-      <label><input type="radio" name="q6" value="D"> 以上皆是</label>
-    </div>
-
-    <!-- 題目 7 -->
-    <div class="question">
-      <p>7. 下列作業時注意事項，何者正確？</p>
-      <label><input type="radio" name="q7" value="A"> 依作業危害選配戴個人防護具</label><br>
-      <label><input type="radio" name="q7" value="B"> 不可擅自關掉安全裝置</label><br>
-      <label><input type="radio" name="q7" value="C"> 如有作業安全疑慮，先停止作業與職安單位討論才可繼續作業</label><br>
-      <label><input type="radio" name="q7" value="D"> 以上皆是</label>
-    </div>
-
-    <!-- 題目 8 -->
-    <div class="question">
-      <p>8. 是否熟知逃生路線？</p>
-      <label><input type="radio" name="q8" value="A"> 是</label><br>
-      <label><input type="radio" name="q8" value="B"> 否</label>
-    </div>
-
-    <!-- 題目 9 -->
-    <div class="question">
-      <p>9. 電器開關及滅火器，消防栓箱前方幾公尺內須淨空，不得堆置工具與雜物？</p>
-      <label><input type="radio" name="q9" value="A"> 1</label><br>
-      <label><input type="radio" name="q9" value="B"> 1.5</label><br>
-      <label><input type="radio" name="q9" value="C"> 2</label><br>
-      <label><input type="radio" name="q9" value="D"> 3 公尺</label>
-    </div>
-
-    <!-- 題目 10 -->
-    <div class="question">
-      <p>10. 作業人員工作時如遇危險應自行退避，並向下列何者進行報備？</p>
-      <label><input type="radio" name="q10" value="A"> 主管</label><br>
-      <label><input type="radio" name="q10" value="B"> 永隆工程業務承辦人員</label><br>
-      <label><input type="radio" name="q10" value="C"> 職安單位</label><br>
-      <label><input type="radio" name="q10" value="D"> 以上皆是</label>
-    </div>
-
-    <button type="button" onclick="submitQuiz()">交卷</button>
-    <button type="button" id="retryBtn" style="display:none;" onclick="resetQuiz()">重新測驗</button>
-  </form>
-
+  <!-- 成績頁 -->
   <h2 id="result"></h2>
 
-  <script>
-    const answers = {
-      q1: "B",
-      q2: "A",
-      q3: "A",
-      q4: "D",
-      q5: "D",
-      q6: "A",
-      q7: "D",
-      q8: "A",
-      q9: "A",
-      q10: "D"
-    };
+  <p>📌 上傳指引：</p>
+  <ul>
+    <li>GitHub Pages：建立 repository → 上傳 index.html → Settings → Pages → 選 main branch → 存檔 → 取得網址</li>
+    <li>Netlify：直接拖拉 index.html → 取得網址</li>
+  </ul>
 
-    let submitted = false;
+  <script>
     let timeLeft = 10 * 60;
+    let submitted = false;
     let timer;
 
-    function submitQuiz() {
-      if (submitted) return;
-      submitted = true;
+    const answers = { q1: "B" /*, q2-q10 依需求添加 */ };
 
-      let score = 0;
-
-      for (let key in answers) {
-        const selected = document.querySelector(`input[name="${key}"]:checked`);
-        if (selected && selected.value === answers[key]) {
-          score++;
-          selected.parentElement.classList.add("correct");
-        } else {
-          if (selected) {
-            selected.parentElement.classList.add("wrong");
-          }
-          const correct = document.querySelector(`input[name="${key}"][value="${answers[key]}"]`);
-          if (correct) correct.parentElement.classList.add("correct");
-        }
-      }
-
-      const resultText = score === 10 
-        ? `你的分數：${score}/10 ✅ 全對，及格！🎉` 
-        : `你的分數：${score}/10 ❌ 未及格，必須全對才及格`;
-
-      document.getElementById("result").innerText = resultText;
-
-      document.querySelectorAll("input[type=radio]").forEach(r => r.disabled = true);
-      document.getElementById("retryBtn").style.display = "inline-block";
-    }
-
-    function startTimer() {
-      timeLeft = 10 * 60;
-      const timerElement = document.getElementById("timer");
+    function startQuiz() {
+      const name = document.getElementById("name").value.trim();
+      const id = document.getElementById("employeeId").value.trim();
+      if (!name || !id) { alert("請輸入姓名與工號/公司名！"); return; }
+      document.getElementById("loginSection").classList.add("hidden");
+      document.getElementById("quizSection").classList.remove("hidden");
+      document.getElementById("displayName").innerText = name;
+      document.getElementById("displayId").innerText = id;
       timer = setInterval(() => {
         let minutes = Math.floor(timeLeft / 60);
         let seconds = timeLeft % 60;
-        timerElement.textContent =
-          `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-
-        if (timeLeft <= 0) {
-          clearInterval(timer);
-          submitQuiz();
-          alert("時間到！已自動交卷。");
-        }
+        document.getElementById("timer").textContent = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+        if (timeLeft <= 0) { clearInterval(timer); submitQuiz(); alert("時間到！已自動交卷。"); }
         timeLeft--;
       }, 1000);
     }
 
-    function resetQuiz() {
-      clearInterval(timer);
-      submitted = false;
-      document.getElementById("result").innerText = "";
-      document.getElementById("retryBtn").style.display = "none";
-
-      document.querySelectorAll("input[type=radio]").forEach(r => {
-        r.checked = false;
-        r.disabled = false;
-        r.parentElement.classList.remove("correct", "wrong");
-      });
-
-      startTimer();
+    function submitQuiz() {
+      if (submitted) return;
+      submitted = true;
+      let score = 0;
+      let total = Object.keys(answers).length;
+      for (let key in answers) {
+        const selected = document.querySelector(`input[name="${key}"]:checked`);
+        if (selected && selected.value === answers[key]) score++;
+      }
+      const name = document.getElementById("name").value.trim();
+      const id = document.getElementById("employeeId").value.trim();
+      document.getElementById("result").innerText = `考生：${name}（${id}）\n分數：${score}/${total}\n${score===total?"✅ 合格":"❌ 不合格，請重考"}`;
+      document.querySelectorAll("input[type=radio]").forEach(r => r.disabled = true);
     }
-
-    startTimer();
   </script>
 </body>
 </html>
